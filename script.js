@@ -21,14 +21,16 @@ function findMovies() {
 async function loadMovies(searchTerm) {
     const URL = `https://omdbapi.com/?s=${searchTerm}&page=1&apikey=a8653d9a`;
 
-    const res = await fetch(URL);
-    const data = await res.json();
-    // console.log(data);
-    // console.log(data.Search);
-    // console.log(data.Response);
+    try {
+        const res = await fetch(URL);
+        const data = await res.json();
 
-    if (data.Response == "True")
-        displayMovieList(data.Search);
+        if (data.Response == "True") {
+            displayMovieList(data.Search);
+        }
+    } catch (error) {
+        console.error("Error loading movies:", error);
+    }
 }
 
 
@@ -65,25 +67,48 @@ function loadMovieDetails() {
     const searchListMovies = searchList.querySelectorAll('.search-list-item');
 
     searchListMovies.forEach(movie => {
-        // console.log(movie.dataset.id);
         movie.addEventListener('click', async () => {
-            // console.log(movie.dataset.id);
             searchList.classList.add('hide-search-list');
             movieSearchBox.value = "";
 
-            const result = await fetch(`https://www.omdbapi.com/?i=${movie.dataset.id}&apikey=a8653d9a`);
-            const movieDetails = await result.json();
-            // console.log(movieDetails);
-
-            displayMovieDetails(movieDetails);            
+            try {
+                const result = await fetch(`https://www.omdbapi.com/?i=${movie.dataset.id}&apikey=a8653d9a`);
+                const movieDetails = await result.json();
+                displayMovieDetails(movieDetails);
+            } catch (error) {
+                console.error("Error loading movie details:", error);
+            }
         });
     });
-
 }
 
 function displayMovieDetails(details) {
     console.log(details);
-    
-    resultGrid.innerHTML = ``;
+
+    resultGrid.innerHTML = `
+    <div class = "movie-poster">
+        <img src = "${(details.Poster != "N/A") ? details.Poster : "image_not_found.png"}" alt = "movie poster">
+    </div>
+    <div class = "movie-info">
+        <h3 class = "movie-title">${details.Title}</h3>
+        <ul class = "movie-misc-info">
+            <li class = "year">Year: ${details.Year}</li>
+            <li class = "rated">Ratings: ${details.Rated}</li>
+            <li class = "released">Released: ${details.Released}</li>
+        </ul>
+        <p class = "genre"><b>Genre:</b> ${details.Genre}</p>
+        <p class = "writer"><b>Writer:</b> ${details.Writer}</p>
+        <p class = "actors"><b>Actors: </b>${details.Actors}</p>
+        <p class = "plot"><b>Plot:</b> ${details.Plot}</p>
+        <p class = "language"><b>Language:</b> ${details.Language}</p>
+        <p class = "awards"><b><i class = "fas fa-award"></i></b> ${details.Awards}</p>
+    </div>
+    `;
 
 }
+
+window.addEventListener('click', (event) => {
+    if(event.target.className != "form-control"){
+        searchList.classList.add('hide-search-list');
+    }
+});
