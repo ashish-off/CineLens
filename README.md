@@ -15,3 +15,6 @@ Cine Lens is a lightweight and efficient movie search tool that allows users to 
 2. View a list of matching results.
 3. Click on a movie to see detailed information.
 4. Use the "Show More" button to access additional details.
+
+
+![cineLens](https://github.com/user-attachments/assets/841ed573-a2c3-408e-a48b-80fc11c8b67d)
