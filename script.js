@@ -83,7 +83,6 @@ function loadMovieDetails() {
 }
 
 function displayMovieDetails(details) {
-    console.log(details);
 
     resultGrid.innerHTML = `
     <div class = "movie-poster">
@@ -100,15 +99,49 @@ function displayMovieDetails(details) {
         <p class = "writer"><b>Writer:</b> ${details.Writer}</p>
         <p class = "actors"><b>Actors: </b>${details.Actors}</p>
         <p class = "plot"><b>Plot:</b> ${details.Plot}</p>
+        <p><b>Director:</b> ${details.Director}</p>
         <p class = "language"><b>Language:</b> ${details.Language}</p>
         <p class = "awards"><b><i class = "fas fa-award"></i></b> ${details.Awards}</p>
+
+        <div id="show-more-container">
+            <button id="show-more-btn" class="show-more-btn">Show More</button>
+            <div id="more-info" class="more-info hidden">
+            <p><b>Type:</b> ${details.Type}</p>
+            <p><b>Runtime:</b> ${details.Runtime}</p>
+            <p><b>Box Office:</b> ${details.BoxOffice}</p>
+            <p><b>Metascore:</b> ${details.Metascore}</p>
+            <p><b>Rotten Tomatoes:</b> ${details.Ratings && details.Ratings[1] ? details.Ratings[1].Value : 'N/A'}</p>
+            <p><b>IMDb Rating:</b> ${details.imdbRating}</p>
+            <p><b>IMDb Votes:</b> ${details.imdbVotes}</p>
+            <p><b>Country:</b> ${details.Country}</p>
+            <p><b>Production:</b> ${details.Production}</p>
+        </div>
     </div>
     `;
 
 }
 
 window.addEventListener('click', (event) => {
-    if(event.target.className != "form-control"){
+    if (event.target.className != "form-control") {
         searchList.classList.add('hide-search-list');
     }
 });
+
+//show-more-btn is loaded after calling displayMovieDetails() so  event delegation used here
+
+document.addEventListener('click', (event) => {
+    if (event.target && event.target.id === 'show-more-btn') {
+        const moreInfo = document.getElementById('more-info');
+        const button = document.getElementById('show-more-btn');
+
+        if (moreInfo.classList.contains('hidden')) {
+            moreInfo.classList.remove('hidden');
+            button.textContent = 'Show Less';
+        } else {
+            moreInfo.classList.add('hidden');
+            button.textContent = 'Show More';
+        }
+    }
+});
+
+
