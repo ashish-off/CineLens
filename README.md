@@ -5,8 +5,8 @@ Cine Lens is a lightweight and efficient movie search tool that allows users to 
 ## Features
 
 - **Movie Search**: Instantly search for movies by title with matching title functionality.
-- **Detailed Information**: Retrieve extensive details about a movie, including plot, genre, cast, ratings, and awards.
-- **Expandable Details**: Click "Show More" to view additional details like runtime, director, box office collection, and Rotten Tomatoes rating.
+- **Detailed Information**: Retrieve extensive details about a movie, including plot, genre, cast, director, ratings, and awards.
+- **Expandable Details**: Click "Show More" to view additional details like runtime, box office collection, IMDb Rating, Metascore, and Rotten Tomatoes rating.
 - **Responsive Design**: Seamlessly adapts to all screen sizes for optimal user experience.
 
 ## Usage
